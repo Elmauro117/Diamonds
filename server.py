@@ -1,40 +1,29 @@
-
-from flask import Flask, request, jsonify
+import numpy as np
+from flask import Flask, request, jsonify,render_template
 import util
+import pickle
+import pandas as pd
 
 app  = Flask(__name__)
 
-@app.route('/get_cuts_names', methods=["GET"])
-def get_cuts_names():
-    response = jsonify({
-        "cuts": util.get_cuts_names()
-        })
-    response.headers.add("Acces-Control-Allow-Origin","*")
-    
-    return response    
-    
-@app.route("/predict_diamond_price", methods=["GET","POST"])
+@app.route('/')
+def home():
+   return render_template('app.html')
+
+@app.route("/predict_diamond_price", methods=["POST"])
 def predict_diamond_price():
-    vari1=str(request.form["vari1"])
-    vari2=float(request.form["vari2"])
-    vari3=float(request.form["vari3"])
-    vari4=float(request.form["vari4"])
+    var1=request.form["cuttersss"]
+    var2=float(request.form["Carat"])
+    var3=float(request.form["Depth"])
+    var4=float(request.form["Table"])
+    response = util.get_diamond_price(var1,var2,var3,var4)
     
-    response = jsonify({
-        "estimated_price": util.get_diamond_price(vari1,vari2,vari3,vari4)
-        })
-    
-    response.headers.add("Acces-Control-Allow-Origin","*")
-    
-    return response
+    return render_template("app.html",prediction_text="Diamond prediction is {}".format(response))
 
 if __name__ == "__main__":
     util.load_saved_artifacts()
-    print("Starting Python Flask Serveru para predecir diamantes $$$")
-    app.run()
+    app.run(debug=True)
     
-
-
 
 
 
