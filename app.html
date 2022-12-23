@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+    <title>Diamond prediction </title>
+	<link rel="stylesheet" href="app.css">
+</head>
+
+
+<body>
+<div class="img"></div>
+<h1>Diamond Prediction</h1>
+
+
+<form action="{{ url_for('predict_diamond_price')}}"method="post">
+	<p>Input numbers after applying a standarization z = (x-u)/d</p>
+	<h2>Carat</h2>
+    <input class="area"  type="text" id="uiCarat" placeholder="Car" required="required" class="floatLabel" name="Carat"/><br>
+	<h2>Depth</h2>
+	<input class="area"  type="text" id="uiDepth" placeholder="Dep" required="required" class="floatLabel" name="Depth" /><br>
+	<h2>Table</h2>
+	<input class="area"  type="text" id="uiTable" placeholder="Tab" required="required" class="floatLabel" name="Table" /><br>
+	<h2>Cut_Type</h2>
+
+	<div>
+  <select class="location" name="cuttersss" id="uiCut_Type" placeholder="Cutter">
+    <option value="" disabled="disabled" selected="selected">Choose a Cut Type</option>
+		<option>cut_Fair</option>
+        <option>cut_Good</option>
+		<option>cut_Premium</option>
+		<option>cut_Very Good</option>
+  </select>
+
+</div>
+	<button class="btn btn-primary btn-block btn-large" type="submit">Estimate Price</button>
+
+</form>
+{{prediction_text}}
+</body>
+</html>
